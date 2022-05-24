@@ -1,0 +1,26 @@
+{
+  "name": "codespitz-90-kotlin-study",
+  "version": "1.0.0",
+  "description": "코드스피츠90 코틀린 언어편 스터디 개인 저장소입니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brightchul/codespitz-90-kotlin-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brightchul/codespitz-90-kotlin-study/issues"
+  },
+  "homepage": "https://github.com/brightchul/codespitz-90-kotlin-study#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "husky": "^8.0.0"
+  }
+}
