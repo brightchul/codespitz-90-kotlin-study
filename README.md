@@ -12,7 +12,7 @@
 
 ## 📁 스터디 정리
 
-\- 1주차 :
+✓ 1주차 : [[강의필기]](./lecture1/README.md) [[강의영상]](https://www.youtube.com/watch?v=1OzBh2Uuj2s) [[과제코드]](./lecture1/src/main/kotlin/CalcHomework.kt)
 
 \- 2주차 :
 

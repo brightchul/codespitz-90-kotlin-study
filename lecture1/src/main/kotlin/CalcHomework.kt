@@ -2,10 +2,15 @@ class CalcHomework {
     private val trimRegex: Regex = """[^.\d-+*\(\)/]""".toRegex()
     private val splitRegex: Regex = """[\-]*[.\d]+|[\+\-\*\/\(\)]""".toRegex()
     private val getSingleMinusBeforeNumberRegex = """(?<=\d)\-(?=\d)""".toRegex()
+    private val getMinusOperatorBeforeBracketRegex  = """(?<=\/|/*)[\/\*]\-(?=\()""".toRegex()
 
     private fun trim(v: String): String = v.replace(trimRegex, "")
-
     private fun replaceMinusToPlusMinus(v: String) = v.replace(getSingleMinusBeforeNumberRegex, "+-")
+    private fun replaceMinusOperationToMinusOneOperation(v: String): String = v.replace(getMinusOperatorBeforeBracketRegex) {
+        val (_, operator, sign) = it.value.split("")
+        "${operator}${sign}1${operator}"
+    }
+    private fun textPreProcessing(text:String):String = replaceMinusOperationToMinusOneOperation(replaceMinusToPlusMinus(trim(text)))
 
     private fun operateBracket(operatorStack: MutableList<Symbol>, postfixNotationStack: MutableList<Element>, bracket: Bracket) {
         when (bracket) {
@@ -19,7 +24,9 @@ class CalcHomework {
         }
     }
 
-    // 후위표기식으로 변환합니다.
+    /**
+     * 후위표기식으로 변환합니다.
+     */
     private fun convertPostfix(v: String): MutableList<Element> {
 
         // 후위표기식 스택입니다. 반환되는 결과값입니다.
@@ -44,6 +51,9 @@ class CalcHomework {
         return postfixNotationStack
     }
 
+    /**
+     * 각 심볼에 상응하는 객체를 반환합니다.
+     */
     private fun getSymbolObject(value: String): Element {
         return when (value) {
             "+" -> Plus()
@@ -56,7 +66,9 @@ class CalcHomework {
         }
     }
 
-    // 해당 연산자를 연산자 우선순위에 맞춰서 후위표기식에 반영합니다.
+    /**
+     * 해당 연산자를 연산자 우선순위에 맞춰서 후위표기식에 반영합니다.
+     */
     private fun pushOperatorList(operatorStack: MutableList<Symbol>, postfixNotationStack: MutableList<Element>, target: Symbol) {
         while (operatorStack.isNotEmpty()) {
             if (operatorStack.last() < target) {
@@ -67,9 +79,10 @@ class CalcHomework {
         operatorStack.add(target)
     }
 
+
     fun calc(v: String): Double {
         // 후위표기식으로 먼저 변환
-        val postfixList = convertPostfix(replaceMinusToPlusMinus(trim(v)))
+        val postfixList = convertPostfix(textPreProcessing(v))
         val operandStack = mutableListOf<Operand>()
 
         // 후위 표기식으로 변환된 값을 연산
